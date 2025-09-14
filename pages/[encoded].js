@@ -2,32 +2,34 @@ import Head from "next/head";
 import Script from "next/script";
 import { useEffect } from "react";
 
-export default function EncodedPage({ title, image, url, siteKey }) {
+export default function EncodedPage({ title, image, url, siteKey, defaultRedirect }) {
   useEffect(() => {
     if (typeof window !== "undefined") {
+      // attach callback global
       window.onRecaptchaSuccess = () => {
-        window.location.href = url || process.env.NEXT_PUBLIC_DEFAULT_REDIRECT_URL || "/";
+        window.location.href = url || defaultRedirect || "/";
       };
     }
-  }, [url]);
+  }, [url, defaultRedirect]);
 
   return (
     <>
       <Head>
-        <title>{title || "Verifikasi untuk melanjutkan"}</title>
+        <title>{title || "Verifikasi reCAPTCHA"}</title>
         <meta name="robots" content="noindex" />
-
-        {/* Open Graph untuk share */}
         {title && <meta property="og:title" content={title} />}
         {image && <meta property="og:image" content={image} />}
         <meta property="og:type" content="website" />
-        <meta property="og:description" content="Verifikasi untuk melanjutkan ke halaman berikutnya." />
+        <meta
+          property="og:description"
+          content="Silakan verifikasi reCAPTCHA untuk melanjutkan."
+        />
       </Head>
 
-      <main className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
-        {/* Script reCAPTCHA */}
-        <Script src="https://www.google.com/recaptcha/api.js" async defer />
+      {/* muat script recaptcha */}
+      <Script src="https://www.google.com/recaptcha/api.js" async defer />
 
+      <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
         <div className="bg-white rounded-2xl shadow-lg max-w-md w-full p-6 text-center">
           {image && (
             <img
@@ -42,11 +44,11 @@ export default function EncodedPage({ title, image, url, siteKey }) {
           )}
 
           <p className="text-sm text-gray-600 mb-3">
-            Silakan centang kotak di bawah untuk melanjutkan
+            Centang kotak di bawah untuk melanjutkan
           </p>
 
           <div
-            className="g-recaptcha flex justify-center"
+            className="g-recaptcha"
             data-sitekey={siteKey}
             data-callback="onRecaptchaSuccess"
           ></div>
@@ -77,6 +79,7 @@ export async function getServerSideProps({ params }) {
       image,
       url,
       siteKey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "",
+      defaultRedirect: process.env.NEXT_PUBLIC_DEFAULT_REDIRECT_URL || "",
     },
   };
 }
