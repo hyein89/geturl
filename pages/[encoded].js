@@ -156,6 +156,8 @@ margin: 4px 2px;
 cursor: pointer;
 -webkit-transition-duration: 0.4s; /* Safari */
 transition-duration: 0.4s;
+font-weight: bold;
+font-family: "Montserrat", sans-serif;
 }
 
 .btn.active {
