@@ -8,7 +8,7 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.onRecaptchaSuccess = () => {
-        setVerified(true); // aktifkan tombol
+        setVerified(true);
       };
     }
   }, []);
@@ -30,19 +30,15 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
         />
 
         {/* Favicon */}
-        <link
-          href="/icons/425.png"
-          type="image/x-icon"
-          rel="icon"
-        />
+        <link href="/icons/425.png" type="image/x-icon" rel="icon" />
 
-        {/* Meta OG biar muncul saat share */}
+        {/* Meta OG */}
         {title && <meta property="og:title" content={title} />}
         {image && <meta property="og:image" content={image} />}
         <meta property="og:type" content="website" />
       </Head>
 
-      {/* Script reCAPTCHA */}
+      {/* reCAPTCHA Script */}
       <Script src="https://www.google.com/recaptcha/api.js" async defer />
 
       <main>
@@ -64,7 +60,7 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           {/* Instruksi */}
           <p>Please check the captcha box to proceed to the destination page.</p>
 
-          {/* reCAPTCHA box */}
+          {/* reCAPTCHA */}
           <div
             className="g-recaptcha recaptcha-box"
             data-sitekey={siteKey}
@@ -83,24 +79,24 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
       </main>
 
       <style jsx>{`
-      html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden; /* matiin scroll */
-}
+        html,
+        body {
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          overflow: hidden; /* hilangkan scroll */
+        }
 
-main {
-  position: relative;
-  height: 100vh;   /* FIXED height, bukan min-height */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Muli", sans-serif;
-  padding: 20px;
-  overflow: hidden; /* supaya nggak bisa geser */
-}
-
+        main {
+          position: relative;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Muli", sans-serif;
+          padding: 20px;
+          overflow: hidden;
+        }
 
         /* Background blur */
         .bg-blur {
@@ -109,17 +105,17 @@ main {
           background-size: cover;
           background-position: center;
           filter: blur(15px);
-          transform: scale(1.1); /* biar blur tidak ada gap */
+          transform: scale(1.1);
           z-index: 0;
         }
 
         .container {
           position: relative;
           width: 100%;
-          max-width: 420px;
+          max-width: 400px;
           text-align: center;
           z-index: 1;
-          background: rgba(255, 255, 255, 0.85);
+          background: rgba(255, 255, 255, 0.9);
           padding: 20px;
         }
 
@@ -147,33 +143,33 @@ main {
         .recaptcha-box {
           display: flex;
           justify-content: center;
-          margin: 0 auto 20px auto;
+          margin: 0 auto 15px auto;
           width: 100%;
         }
 
-.btn {
-  display: block;
-  width: 100%;
-  padding: 12px 18px;
-  font-size: 15px;
-  font-weight: bold;
-  background: #ccc;
-  color: #fff;
-  cursor: not-allowed;
-  font-family: "Montserrat", sans-serif;
-  border-radius: 6px; /* tambahin radius */
-  transition: background 0.3s;
-}
+        .btn {
+          display: block;
+          width: 100%;
+          padding: 12px 18px;
+          font-size: 15px;
+          font-weight: bold;
+          background: #ccc;
+          color: #fff;
+          cursor: not-allowed;
+          font-family: "Montserrat", sans-serif;
+          border-radius: 6px;
+          border: none;
+          transition: background 0.3s;
+        }
 
-.btn.active {
-  background: #22c55e; /* green */
-  cursor: pointer;
-}
+        .btn.active {
+          background: #22c55e; /* green */
+          cursor: pointer;
+        }
 
-.btn.active:hover {
-  background: #16a34a; /* darker green on hover */
-}
-
+        .btn.active:hover {
+          background: #16a34a; /* darker green */
+        }
       `}</style>
     </>
   );
@@ -186,8 +182,7 @@ export async function getServerSideProps({ params }) {
 
   try {
     const decoded = Buffer.from(params.encoded, "base64").toString("utf-8");
-    // format: Title+ImageUrl+RedirectUrl
-    const parts = decoded.split("+");
+    const parts = decoded.split("+"); // format: Title+ImageUrl+RedirectUrl
     title = parts[0] || "";
     image = parts[1] || "";
     url = parts[2] || "";
