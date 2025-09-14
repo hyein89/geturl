@@ -5,7 +5,7 @@ import { useEffect } from "react";
 export default function EncodedPage({ title, image, url, siteKey, defaultRedirect }) {
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // attach callback global
+      // callback global untuk reCAPTCHA
       window.onRecaptchaSuccess = () => {
         window.location.href = url || defaultRedirect || "/";
       };
@@ -17,6 +17,8 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
       <Head>
         <title>{title || "Verifikasi reCAPTCHA"}</title>
         <meta name="robots" content="noindex" />
+
+        {/* Open Graph untuk share */}
         {title && <meta property="og:title" content={title} />}
         {image && <meta property="og:image" content={image} />}
         <meta property="og:type" content="website" />
@@ -26,7 +28,7 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
         />
       </Head>
 
-      {/* muat script recaptcha */}
+      {/* load script reCAPTCHA */}
       <Script src="https://www.google.com/recaptcha/api.js" async defer />
 
       <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
@@ -65,10 +67,11 @@ export async function getServerSideProps({ params }) {
 
   try {
     const decoded = Buffer.from(params.encoded, "base64").toString("utf-8");
-    const parsed = JSON.parse(decoded);
-    title = parsed.title || "";
-    image = parsed.image || "";
-    url = parsed.url || "";
+    // Format: Title+ImageUrl+RedirectUrl
+    const parts = decoded.split("+");
+    title = parts[0] || "";
+    image = parts[1] || "";
+    url   = parts[2] || "";
   } catch (err) {
     console.error("Decode error:", err);
   }
