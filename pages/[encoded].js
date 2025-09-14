@@ -191,8 +191,24 @@ export async function getServerSideProps({ params }) {
     title = parts[0] || "";
     image = parts[1] || "";
     url = parts[2] || "";
+
+    // Jika decode tidak valid (misal title kosong), redirect ke halaman utama 404
+    if (!title && !image && !url) {
+      return {
+        redirect: {
+          destination: "/", // root kita pakai sebagai halaman 404
+          permanent: false,
+        },
+      };
+    }
   } catch (err) {
     console.error("Decode error:", err);
+    return {
+      redirect: {
+        destination: "/", // redirect ke root 404
+        permanent: false,
+      },
+    };
   }
 
   return {
@@ -205,3 +221,4 @@ export async function getServerSideProps({ params }) {
     },
   };
 }
+
