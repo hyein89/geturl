@@ -1,5 +1,6 @@
+import Script from 'next/script';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function EncodedPage({ siteKey }) {
   const router = useRouter();
@@ -7,25 +8,11 @@ export default function EncodedPage({ siteKey }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    if (!siteKey) return;
-    // inject script Google reCAPTCHA v2
-    if (!document.querySelector('#recaptcha-script')) {
-      const s = document.createElement('script');
-      s.src = 'https://www.google.com/recaptcha/api.js';
-      s.id = 'recaptcha-script';
-      s.async = true;
-      s.defer = true;
-      document.body.appendChild(s);
-    }
-  }, [siteKey]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    // ambil token dari widget reCAPTCHA
     const token =
       window.grecaptcha &&
       window.grecaptcha.getResponse &&
@@ -54,7 +41,7 @@ export default function EncodedPage({ siteKey }) {
         }
       }
     } catch (err) {
-      setError('Terjadi kesalahan koneksi ke server.');
+      setError('Terjadi kesalahan koneksi.');
     } finally {
       setLoading(false);
     }
@@ -72,10 +59,13 @@ export default function EncodedPage({ siteKey }) {
         gap: 12,
       }}
     >
+      {/* inject script recaptcha v2 */}
+      <Script src="https://www.google.com/recaptcha/api.js" async defer />
+
       <h2>Verifikasi untuk melanjutkan</h2>
       <form onSubmit={handleSubmit}>
         <div className="g-recaptcha" data-sitekey={siteKey}></div>
-        <div style={{ marginTop: 12, display: 'flex', justifyContent: 'center' }}>
+        <div style={{ marginTop: 12 }}>
           <button type="submit" disabled={loading}>
             {loading ? 'Memproses...' : 'Lanjutkan'}
           </button>
