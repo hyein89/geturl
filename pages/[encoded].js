@@ -9,7 +9,7 @@ export default function EncodedPage({ siteKey }) {
 
   useEffect(() => {
     if (!siteKey) return;
-    // load reCAPTCHA script hanya sekali
+    // inject script Google reCAPTCHA v2
     if (!document.querySelector('#recaptcha-script')) {
       const s = document.createElement('script');
       s.src = 'https://www.google.com/recaptcha/api.js';
