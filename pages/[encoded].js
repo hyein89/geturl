@@ -83,16 +83,24 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
       </main>
 
       <style jsx>{`
-        main {
-          position: relative;
-          min-height: 100vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-family: "Muli", sans-serif;
-          padding: 20px;
-          overflow: hidden;
-        }
+      html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* matiin scroll */
+}
+
+main {
+  position: relative;
+  height: 100vh;   /* FIXED height, bukan min-height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Muli", sans-serif;
+  padding: 20px;
+  overflow: hidden; /* supaya nggak bisa geser */
+}
+
 
         /* Background blur */
         .bg-blur {
@@ -143,24 +151,29 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           width: 100%;
         }
 
-        .btn {
-          display: block;
-          width: 100%;
-          padding: 12px 18px;
-          font-size: 15px;
-          font-weight: bold;
-          background: #ccc;
-          color: #fff;
-          cursor: not-allowed;
-          font-family: "Montserrat", sans-serif;
-        }
-        .btn.active {
-          background: #3b82f6;
-          cursor: pointer;
-        }
-        .btn.active:hover {
-          background: #2563eb;
-        }
+.btn {
+  display: block;
+  width: 100%;
+  padding: 12px 18px;
+  font-size: 15px;
+  font-weight: bold;
+  background: #ccc;
+  color: #fff;
+  cursor: not-allowed;
+  font-family: "Montserrat", sans-serif;
+  border-radius: 6px; /* tambahin radius */
+  transition: background 0.3s;
+}
+
+.btn.active {
+  background: #22c55e; /* green */
+  cursor: pointer;
+}
+
+.btn.active:hover {
+  background: #16a34a; /* darker green on hover */
+}
+
       `}</style>
     </>
   );
