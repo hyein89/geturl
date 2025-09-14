@@ -31,7 +31,7 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
 
         {/* Favicon */}
         <link
-          href="https://skidrowtorrentgame.com/wp-content/uploads/2023/01/425.png"
+          href="/icons/425.png"
           type="image/x-icon"
           rel="icon"
         />
