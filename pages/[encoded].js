@@ -70,7 +70,7 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           <button
             onClick={handleContinue}
             disabled={!verified}
-            className={verified ? "btn btn-primary btn-captcha active" : "btn disabled"}
+            className={verified ? "btn active" : "btn disabled"}
           >
             Click here to continue
           </button>
@@ -143,21 +143,12 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           margin-bottom: 15px;
         }
 
-.btn-box-tool {
+         .btn {
     padding: 5px;
     font-size: 12px;
     background: transparent;
     color: #97a0b3;
-}
-
- .btn-box-tool,
-.btn-box-tool:hover {
-    color: #606c84;
-}
-
-.btn-box-tool.btn:active {
-    box-shadow: none;
-}
+        }
 
         .btn.disabled {
           background: #ccc;
@@ -165,7 +156,15 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           cursor: not-allowed;
         }
 
+        .btn.active {
+          background: #22c55e;
+          color: #fff;
+          cursor: pointer;
+        }
 
+        .btn.active:hover {
+          background: #16a34a;
+        }
       `}</style>
     </>
   );
