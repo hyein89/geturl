@@ -57,7 +57,7 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           {/* Judul */}
           <h1>{title || "Verification Required"}</h1>
 
-          <p>Please verify the captcha to continue</p>
+          <p>Please check the captcha box to proceed to the destination page. </p>
 
           {/* reCAPTCHA */}
           <div
@@ -70,9 +70,9 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           <button
             onClick={handleContinue}
             disabled={!verified}
-            className={verified ? "btn active" : "btn disabled"}
+            className={verified ? "btn btn-primary btn-captcha active" : "btn disabled"}
           >
-            Continue
+            Click here to continue
           </button>
         </div>
       </main>
@@ -143,17 +143,21 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           margin-bottom: 15px;
         }
 
-        .btn {
-          display: block;
-          width: 100%;
-          padding: 12px;
-          font-size: 16px;
-          font-weight: bold;
-          border: none;
-          border-radius: 6px;
-          font-family: "Montserrat", sans-serif;
-          transition: background 0.3s;
-        }
+.btn-box-tool {
+    padding: 5px;
+    font-size: 12px;
+    background: transparent;
+    color: #97a0b3;
+}
+
+ .btn-box-tool,
+.btn-box-tool:hover {
+    color: #606c84;
+}
+
+.btn-box-tool.btn:active {
+    box-shadow: none;
+}
 
         .btn.disabled {
           background: #ccc;
@@ -161,15 +165,7 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           cursor: not-allowed;
         }
 
-        .btn.active {
-          background: #22c55e;
-          color: #fff;
-          cursor: pointer;
-        }
 
-        .btn.active:hover {
-          background: #16a34a;
-        }
       `}</style>
     </>
   );
