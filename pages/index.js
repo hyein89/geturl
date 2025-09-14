@@ -1,16 +1,4 @@
-import { useEffect, useState } from 'react';
-
 export default function Home() {
-  const [dots, setDots] = useState('');
-
-  // Animasi titik-titik loading
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDots(prev => (prev.length < 3 ? prev + '.' : ''));
-    }, 500);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <main style={{
       fontFamily: 'system-ui, Segoe UI, Roboto',
@@ -34,7 +22,7 @@ export default function Home() {
         marginBottom: '24px',
         color: '#555'
       }}>
-        Halaman utama tidak tersedia{dots}
+        Halaman utama tidak tersedia
       </p>
       <a href="/dashboard" style={{
         textDecoration: 'none',
@@ -53,9 +41,4 @@ export default function Home() {
   );
 }
 
-export async function getServerSideProps() {
-  return {
-    notFound: true
-  };
-}
 
