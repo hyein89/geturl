@@ -16,21 +16,21 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
       <Head>
         <title>{title || "Verifikasi reCAPTCHA"}</title>
         <meta name="robots" content="noindex" />
-
-        {/* Meta Open Graph biar muncul saat share */}
+        {/* Meta Open Graph biar tampil saat share */}
         {title && <meta property="og:title" content={title} />}
         {image && <meta property="og:image" content={image} />}
         <meta property="og:type" content="website" />
-        <meta property="og:description" content="Silakan verifikasi reCAPTCHA untuk melanjutkan." />
+        <meta
+          property="og:description"
+          content="Silakan verifikasi reCAPTCHA untuk melanjutkan."
+        />
       </Head>
 
-      {/* Script reCAPTCHA */}
       <Script src="https://www.google.com/recaptcha/api.js" async defer />
 
-      {/* Tampilan sederhana */}
-      <main className="flex flex-col items-center justify-center min-h-screen p-4 bg-white">
-        <h1 className="text-2xl md:text-3xl font-bold text-blue-700 text-center mb-6">
-          How To Add Google Recaptcha To Our Website
+      <main>
+        <h1>
+          {title || "How To Add Google Recaptcha To Our Website"}
         </h1>
 
         <div
@@ -38,7 +38,38 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           data-sitekey={siteKey}
           data-callback="onRecaptchaSuccess"
         ></div>
+
+        <p className="note">Centang kotak di atas untuk melanjutkan</p>
       </main>
+
+      <style jsx>{`
+        main {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          background: #fff;
+          padding: 20px;
+          text-align: center;
+        }
+        h1 {
+          font-size: 24px;
+          font-weight: bold;
+          color: #1a56db; /* biru */
+          margin-bottom: 30px;
+        }
+        @media (min-width: 768px) {
+          h1 {
+            font-size: 32px;
+          }
+        }
+        .note {
+          margin-top: 20px;
+          font-size: 14px;
+          color: #555;
+        }
+      `}</style>
     </>
   );
 }
