@@ -42,7 +42,7 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
       <Script src="https://www.google.com/recaptcha/api.js" async defer />
 
       <main>
-        {/* Background blur pakai image */}
+        {/* Background blur */}
         {image && (
           <div
             className="bg-blur"
@@ -50,15 +50,14 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           ></div>
         )}
 
-        <div className="container">
-          {/* Gambar utama */}
+        <div className="card">
+          {/* Logo/Gambar */}
           {image && <img src={image} alt={title} className="preview" />}
 
           {/* Judul */}
           <h1>{title || "Verification Required"}</h1>
 
-          {/* Instruksi */}
-          <p>Please check the captcha box to proceed to the destination page.</p>
+          <p>Please verify the captcha to continue</p>
 
           {/* reCAPTCHA */}
           <div
@@ -73,7 +72,7 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
             disabled={!verified}
             className={verified ? "btn active" : "btn disabled"}
           >
-            Click here to continue
+            Continue
           </button>
         </div>
       </main>
@@ -84,7 +83,7 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           margin: 0;
           padding: 0;
           height: 100%;
-          overflow: hidden; /* hilangkan scroll */
+          overflow: hidden;
         }
 
         main {
@@ -94,8 +93,6 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           align-items: center;
           justify-content: center;
           font-family: "Muli", sans-serif;
-          padding: 20px;
-          overflow: hidden;
         }
 
         /* Background blur */
@@ -104,71 +101,74 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           inset: 0;
           background-size: cover;
           background-position: center;
-          filter: blur(15px);
+          filter: blur(18px);
           transform: scale(1.1);
           z-index: 0;
         }
 
-        .container {
+        .card {
           position: relative;
           width: 100%;
-          max-width: 400px;
+          max-width: 380px;
+          background: rgba(255, 255, 255, 0.95);
+          padding: 25px 20px;
           text-align: center;
           z-index: 1;
-          background: rgba(255, 255, 255, 0.9);
-          padding: 20px;
         }
 
         .preview {
           width: 100%;
-          max-height: 200px;
+          max-height: 160px;
           object-fit: cover;
-          margin-bottom: 20px;
+          margin-bottom: 15px;
         }
 
         h1 {
           font-family: "Montserrat", sans-serif;
+          font-size: 22px;
           font-weight: 700;
-          font-size: 20px;
-          margin-bottom: 10px;
           color: #111;
+          margin: 0 0 10px 0;
         }
 
         p {
           font-size: 14px;
-          color: #333;
-          margin-bottom: 20px;
+          color: #444;
+          margin-bottom: 18px;
         }
 
         .recaptcha-box {
           display: flex;
           justify-content: center;
-          margin: 0 auto 15px auto;
-          width: 100%;
+          margin-bottom: 15px;
         }
 
         .btn {
           display: block;
           width: 100%;
-          padding: 12px 18px;
-          font-size: 15px;
+          padding: 12px;
+          font-size: 16px;
           font-weight: bold;
-          background: #ccc;
-          color: #fff;
-          cursor: not-allowed;
-          font-family: "Montserrat", sans-serif;
-          border-radius: 6px;
           border: none;
+          border-radius: 6px;
+          font-family: "Montserrat", sans-serif;
           transition: background 0.3s;
         }
 
+        .btn.disabled {
+          background: #ccc;
+          color: #fff;
+          cursor: not-allowed;
+        }
+
         .btn.active {
-          background: #22c55e; /* green */
+          background: #22c55e;
+          color: #fff;
           cursor: pointer;
         }
 
         .btn.active:hover {
-          background: #16a34a; /* darker green */
+          background: #16a34a;
         }
       `}</style>
     </>
@@ -182,7 +182,7 @@ export async function getServerSideProps({ params }) {
 
   try {
     const decoded = Buffer.from(params.encoded, "base64").toString("utf-8");
-    const parts = decoded.split("+"); // format: Title+ImageUrl+RedirectUrl
+    const parts = decoded.split("+");
     title = parts[0] || "";
     image = parts[1] || "";
     url = parts[2] || "";
