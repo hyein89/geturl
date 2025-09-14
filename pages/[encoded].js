@@ -36,7 +36,7 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           rel="icon"
         />
 
-        {/* Meta OG biar tampil saat share */}
+        {/* Meta OG biar muncul saat share */}
         {title && <meta property="og:title" content={title} />}
         {image && <meta property="og:image" content={image} />}
         <meta property="og:type" content="website" />
@@ -46,8 +46,16 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
       <Script src="https://www.google.com/recaptcha/api.js" async defer />
 
       <main>
+        {/* Background blur pakai image */}
+        {image && (
+          <div
+            className="bg-blur"
+            style={{ backgroundImage: `url(${image})` }}
+          ></div>
+        )}
+
         <div className="container">
-          {/* Gambar di atas */}
+          {/* Gambar utama */}
           {image && <img src={image} alt={title} className="preview" />}
 
           {/* Judul */}
@@ -76,55 +84,76 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
 
       <style jsx>{`
         main {
+          position: relative;
+          min-height: 100vh;
           display: flex;
           align-items: center;
           justify-content: center;
-          min-height: 100vh;
-          background: #fff;
           font-family: "Muli", sans-serif;
           padding: 20px;
+          overflow: hidden;
         }
+
+        /* Background blur */
+        .bg-blur {
+          position: absolute;
+          inset: 0;
+          background-size: cover;
+          background-position: center;
+          filter: blur(15px);
+          transform: scale(1.1); /* biar blur tidak ada gap */
+          z-index: 0;
+        }
+
         .container {
+          position: relative;
           width: 100%;
           max-width: 420px;
           text-align: center;
+          z-index: 1;
+          background: rgba(255, 255, 255, 0.85);
+          padding: 20px;
         }
+
         .preview {
           width: 100%;
           max-height: 200px;
           object-fit: cover;
           margin-bottom: 20px;
         }
+
         h1 {
           font-family: "Montserrat", sans-serif;
           font-weight: 700;
           font-size: 20px;
           margin-bottom: 10px;
-          color: #222;
+          color: #111;
         }
+
         p {
           font-size: 14px;
-          color: #555;
+          color: #333;
           margin-bottom: 20px;
         }
+
         .recaptcha-box {
           display: flex;
           justify-content: center;
           margin: 0 auto 20px auto;
           width: 100%;
         }
+
         .btn {
           display: block;
           width: 100%;
           padding: 12px 18px;
-          border: none;
+          border: 1px solid #ccc;
           font-size: 15px;
           font-weight: bold;
           background: #ccc;
           color: #fff;
           cursor: not-allowed;
           font-family: "Montserrat", sans-serif;
-          border: 1px solid #ccc;
         }
         .btn.active {
           background: #3b82f6;
