@@ -123,6 +123,8 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           background: #ccc;
           color: #fff;
           cursor: not-allowed;
+          font-family: "Montserrat", sans-serif;
+          border: 1px solid #ccc;
         }
         .btn.active {
           background: #3b82f6;
