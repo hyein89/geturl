@@ -40,29 +40,25 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
         {title && <meta property="og:title" content={title} />}
         {image && <meta property="og:image" content={image} />}
         <meta property="og:type" content="website" />
-        <meta
-          property="og:description"
-          content="Please verify the reCAPTCHA to continue."
-        />
       </Head>
 
       {/* Script reCAPTCHA */}
       <Script src="https://www.google.com/recaptcha/api.js" async defer />
 
       <main>
-        <div className="card">
+        <div className="container">
           {/* Gambar di atas */}
           {image && <img src={image} alt={title} className="preview" />}
 
           {/* Judul */}
-          <h1>{title || "Home - Verification Page"}</h1>
+          <h1>{title || "Verification Required"}</h1>
 
           {/* Instruksi */}
           <p>Please check the captcha box to proceed to the destination page.</p>
 
           {/* reCAPTCHA box */}
           <div
-            className="g-recaptcha"
+            className="g-recaptcha recaptcha-box"
             data-sitekey={siteKey}
             data-callback="onRecaptchaSuccess"
           ></div>
@@ -84,48 +80,49 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           align-items: center;
           justify-content: center;
           min-height: 100vh;
-          background: #f7f7f7;
+          background: #fff;
           font-family: "Muli", sans-serif;
           padding: 20px;
         }
-        .card {
-          background: #fff;
-          padding: 20px;
-          border-radius: 8px;
-          max-width: 420px;
+        .container {
           width: 100%;
+          max-width: 420px;
           text-align: center;
         }
         .preview {
-          max-width: 100%;
-          height: auto;
-          border-radius: 6px;
-          margin-bottom: 15px;
+          width: 100%;
+          max-height: 200px;
+          object-fit: cover;
+          margin-bottom: 20px;
         }
         h1 {
           font-family: "Montserrat", sans-serif;
           font-weight: 700;
           font-size: 20px;
           margin-bottom: 10px;
-          color: #333;
+          color: #222;
         }
         p {
           font-size: 14px;
           color: #555;
           margin-bottom: 20px;
         }
-        .btn {
-          margin-top: 20px;
-          padding: 12px 18px;
+        .recaptcha-box {
+          display: flex;
+          justify-content: center;
+          margin: 0 auto 20px auto;
           width: 100%;
+        }
+        .btn {
+          display: block;
+          width: 100%;
+          padding: 12px 18px;
           border: none;
-          border-radius: 6px;
           font-size: 15px;
           font-weight: bold;
-          cursor: not-allowed;
           background: #ccc;
           color: #fff;
-          transition: background 0.3s, cursor 0.3s;
+          cursor: not-allowed;
         }
         .btn.active {
           background: #3b82f6;
