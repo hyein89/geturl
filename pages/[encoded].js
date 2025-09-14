@@ -147,7 +147,6 @@ export default function EncodedPage({ title, image, url, siteKey, defaultRedirec
           display: block;
           width: 100%;
           padding: 12px 18px;
-          border-radius: 2px;
           font-size: 15px;
           font-weight: bold;
           background: #ccc;
