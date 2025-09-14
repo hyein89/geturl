@@ -16,7 +16,7 @@ export default function EncodedPage({ siteKey }) {
 export async function getServerSideProps() {
   return {
     props: {
-      siteKey: process.env.RECAPTCHA_SITE_KEY || '',
+      siteKey: process.env.RECAPTCHA_SITE_KEY || '6LcLeckrAAAAAKPXhHAxQaaNX46v9XzcglYJMBva',
     },
   };
 }
