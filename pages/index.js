@@ -22,21 +22,9 @@ export default function Home() {
         marginBottom: '24px',
         color: '#555'
       }}>
-        Halaman utama tidak tersedia
+       Home page is not available
       </p>
-      <a href="/dashboard" style={{
-        textDecoration: 'none',
-        padding: '12px 24px',
-        backgroundColor: '#4f46e5',
-        color: 'white',
-        borderRadius: '8px',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-        transition: '0.3s'
-      }}
-      onMouseOver={e => e.currentTarget.style.backgroundColor = '#3730a3'}
-      onMouseOut={e => e.currentTarget.style.backgroundColor = '#4f46e5'}>
-        Kembali ke Dashboard
-      </a>
+
     </main>
   );
 }
