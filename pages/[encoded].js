@@ -2,41 +2,25 @@ import Script from 'next/script';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-export default function EncodedPage({ siteKey, title, image, url }) {
+export default function EncodedPage({ title, image, url }) {
   const router = useRouter();
 
-  // inject callback global untuk reCAPTCHA
   useEffect(() => {
+    // callback global reCAPTCHA v2
     if (typeof window !== 'undefined') {
-      window.onRecaptchaSuccess = async (token) => {
-        try {
-          const res = await fetch('/api/verify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token, encoded: router.query.encoded }),
-          });
-          const data = await res.json();
-          if (res.ok && data.redirectTo) {
-            window.location.href = data.redirectTo;
-          } else {
-            alert(data.message || 'Verifikasi gagal.');
-            if (window.grecaptcha && window.grecaptcha.reset) {
-              window.grecaptcha.reset();
-            }
-          }
-        } catch (err) {
-          alert('Terjadi kesalahan koneksi.');
-        }
+      window.onRecaptchaSuccess = () => {
+        // sukses → langsung redirect
+        window.location.href = url || '/';
       };
     }
-  }, [router.query.encoded]);
+  }, [url]);
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-50">
-      {/* reCAPTCHA script */}
+    <main className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-100">
+      {/* load script reCAPTCHA */}
       <Script src="https://www.google.com/recaptcha/api.js" async defer />
 
-      <div className="bg-white rounded-2xl shadow-lg max-w-md w-full p-6 flex flex-col items-center text-center">
+      <div className="bg-white rounded-2xl shadow-md max-w-md w-full p-6 text-center">
         {image && (
           <img
             src={image}
@@ -48,12 +32,12 @@ export default function EncodedPage({ siteKey, title, image, url }) {
 
         <div
           className="g-recaptcha"
-          data-sitekey={siteKey}
+          data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
           data-callback="onRecaptchaSuccess"
         ></div>
 
         <p className="text-sm text-gray-500 mt-4">
-          Centang kotak di atas untuk melanjutkan ke halaman penawaran.
+          Centang kotak di atas untuk melanjutkan.
         </p>
       </div>
     </main>
@@ -76,11 +60,6 @@ export async function getServerSideProps({ params }) {
   }
 
   return {
-    props: {
-      siteKey: process.env.RECAPTCHA_SITE_KEY || '',
-      title,
-      image,
-      url,
-    },
+    props: { title, image, url },
   };
 }
