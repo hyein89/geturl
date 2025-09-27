@@ -18,6 +18,7 @@ export default function Home() {
         <title>404 — Page Not Found</title>
         <link rel="icon" href="/icons/425.png" type="image/png" />
         <meta name="description" content="The home page is not available." />
+        <meta name="galaksion-domain-verification" content="0063b07ad1bcd14ba98d4b931c896b70e0b59edf21646caa4f4f375a40b7e91e" />
       </Head>
 
       <main style={{
